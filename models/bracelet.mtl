@@ -1,0 +1,40 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 13.01.2012 14:26:07
+
+newmtl White_pearl_bracelet_Metall
+	Ns 55.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.5684 0.5684 0.5684
+	Ke 0.0000 0.0000 0.0000
+
+newmtl White_pearl_bracelet_Rope
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.0990 0.0990 0.0990
+	Ke 0.0000 0.0000 0.0000
+	map_Ka white_pearl_bracelet_Rope.jpg
+	map_Kd white_pearl_bracelet_Rope.jpg
+
+newmtl White_pearl_bracelet_Pearl
+	Ns 49.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6784 0.6784 0.6784
+	Kd 0.6784 0.6784 0.6784
+	Ks 0.5850 0.5850 0.5850
+	Ke 0.0000 0.0000 0.0000
