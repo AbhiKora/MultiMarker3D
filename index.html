@@ -379,33 +379,22 @@ function initialize() {
 	});
 
 	// Multiple Markers + Different Objects
-	setupMarkerWithModel("hiro", "watch.obj", "watch.mtl", 0.25, 0.25);
-	setupMarkerWithModel("kanji", "shoes.obj", "shoes.mtl", 0.25, 0.25);
-	setupMarkerWithModel("letterA", "handbag.obj", "handbag.mtl", 0.25, 0.25);
-	setupMarkerWithModel("letterB", "necklace.obj", "necklace.mtl", 0.25, 0.25);
+	setupMarkerWithModel("hiro", "watch.obj", "watch.mtl", 0.25, -0.3);
+	setupMarkerWithModel("kanji", "shoes.obj", "shoes.mtl", 0.25, -0.3);
+	setupMarkerWithModel("letterA", "handbag.obj", "handbag.mtl", 0.25, -0.3);
+	setupMarkerWithModel("letterB", "necklace.obj", "necklace.mtl", 0.25, -0.3);
 }
 
 function setupMarkerWithModel(patternName, objFile, mtlFile, scale, yPos) {
 	let markerRoot = new THREE.Group();
 	scene.add(markerRoot);
 
-	let markerControls = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
+	new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
 		type: 'pattern',
 		patternUrl: "data/" + patternName + ".patt",
 	});
 
-	// Optional: Ground plane (transparent colored)
-	let geometry = new THREE.PlaneBufferGeometry(1, 1, 4, 4);
-	let material = new THREE.MeshBasicMaterial({ color: 0x00ffff, opacity: 0.3, transparent: true });
-	let plane = new THREE.Mesh(geometry, material);
-	plane.rotation.x = -Math.PI / 2;
-	plane.position.y = -1.5;
-	markerRoot.add(plane);
-
-
-	function onProgress(xhr) { console.log((xhr.loaded / xhr.total * 100) + '% loaded'); }
-	function onError(xhr) { console.log('An error happened'); }
-
+	// Load model first, then align ground plane to it
 	new THREE.MTLLoader()
 		.setPath('models/')
 		.load(mtlFile, function (materials) {
@@ -417,10 +406,32 @@ function setupMarkerWithModel(patternName, objFile, mtlFile, scale, yPos) {
 					let object = group;
 					object.scale.set(scale, scale, scale);
 					object.position.y = yPos;
+
+					// Compute bounding box to find base
+					let bbox = new THREE.Box3().setFromObject(object);
+					let objectBaseY = bbox.min.y;
+
+					// Add object to marker root
 					markerRoot.add(object);
-				}, onProgress, onError);
+
+					// Now add the ground plane under the object
+					// let geometry = new THREE.PlaneBufferGeometry(1, 1, 4, 4);
+					// let material = new THREE.MeshBasicMaterial({ color: 0x00ffff, opacity: 0.3, transparent: true });
+					// let plane = new THREE.Mesh(geometry, material);
+
+					// plane.rotation.x = -Math.PI / 2;
+
+					// // Align plane just below object base
+					// plane.position.y = objectBaseY - 0.01;
+
+					// markerRoot.add(plane);
+					let helper = new THREE.BoxHelper(object, 0xff0000);
+markerRoot.add(helper);
+
+				});
 		});
 }
+
 
 function update() {
 	if (arToolkitSource.ready !== false)
