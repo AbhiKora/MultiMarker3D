@@ -399,7 +399,9 @@ function setupMarkerWithModel(patternName, objFile, mtlFile, scale, yPos) {
 	let material = new THREE.MeshBasicMaterial({ color: 0x00ffff, opacity: 0.3, transparent: true });
 	let plane = new THREE.Mesh(geometry, material);
 	plane.rotation.x = -Math.PI / 2;
+	plane.position.y = -1.5;
 	markerRoot.add(plane);
+
 
 	function onProgress(xhr) { console.log((xhr.loaded / xhr.total * 100) + '% loaded'); }
 	function onError(xhr) { console.log('An error happened'); }
